@@ -172,7 +172,7 @@ fun Login(modifier: Modifier = Modifier) {
                 },
             ) {
                 Text(
-                    text = "Forgot Password?",
+                    text = "Sign In",
                     fontSize = 16.sp,
                     fontFamily = NunitoSemiBold,
                     color = Color.White
