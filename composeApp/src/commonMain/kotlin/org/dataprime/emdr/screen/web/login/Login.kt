@@ -17,19 +17,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import emdrcompanion.composeapp.generated.resources.Res
 import emdrcompanion.composeapp.generated.resources.eye_black
+import emdrcompanion.composeapp.generated.resources.eye_white
 import emdrcompanion.composeapp.generated.resources.sun
 import org.dataprime.emdr.theme.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun Login(modifier: Modifier = Modifier) {
-    
+fun Login(
+    modifier: Modifier = Modifier,
+    lightsOn: Boolean,
+    onLightsOnToggled: (Boolean) -> Unit
+) {
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    var isChecked by remember { mutableStateOf(false) }
-    var isLightToggled by remember { mutableStateOf(false) }
+    var isRememberMeChecked by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -38,7 +42,10 @@ fun Login(modifier: Modifier = Modifier) {
     ) {
         Image(
             modifier = Modifier.width(120.dp),
-            painter = painterResource(resource = Res.drawable.eye_black),
+            painter = painterResource(resource = if (lightsOn) {
+                Res.drawable.eye_white
+            } else Res.drawable.eye_black
+            ),
             contentDescription = null
         )
 
@@ -48,7 +55,9 @@ fun Login(modifier: Modifier = Modifier) {
             text = "Welcome to EMDR Companion",
             fontSize = 24.sp,
             fontFamily = InterSemiBold,
-            color = Text500,
+            color = if (lightsOn) {
+                Color.White
+            } else Text500,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
@@ -59,7 +68,9 @@ fun Login(modifier: Modifier = Modifier) {
             text = "Sign in using your work email to get started",
             fontSize = 16.sp,
             fontFamily = InterSemiBold,
-            color = Text300,
+            color = if (lightsOn) {
+                Color.White
+            } else Text300,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
@@ -134,9 +145,9 @@ fun Login(modifier: Modifier = Modifier) {
                 Checkbox(
                     modifier = Modifier.padding(start = 10.dp),
                     colors = CheckBoxColor,
-                    checked = isChecked,
+                    checked = isRememberMeChecked,
                     onCheckedChange = {
-                        isChecked = !isChecked
+                        isRememberMeChecked = !isRememberMeChecked
                     }
                 )
 
@@ -191,19 +202,19 @@ fun Login(modifier: Modifier = Modifier) {
                         contentDescription = null
                     )
                 },
-                checked = isLightToggled,
-                onCheckedChange = {
-                    isLightToggled = !isLightToggled
-                }
+                checked = lightsOn,
+                onCheckedChange = onLightsOnToggled
             )
 
             Spacer(modifier = Modifier.width(16.dp))
 
             Text(
-                text = if (isLightToggled) "Lights On" else "Lights Off",
+                text = if (lightsOn) "Lights On" else "Lights Off",
                 fontSize = 14.sp,
                 fontFamily = NunitoMedium,
-                color = Text500
+                color = if (lightsOn) {
+                    Color.White
+                } else Text500
             )
         }
     }
@@ -212,5 +223,11 @@ fun Login(modifier: Modifier = Modifier) {
 @Preview(showBackground = true, widthDp = 1024, heightDp = 768)
 @Composable
 fun LoginPreview() {
-    Login(modifier = Modifier.padding(16.dp))
+    Login(
+        modifier = Modifier.padding(16.dp),
+        lightsOn = false,
+        onLightsOnToggled = {
+
+        }
+    )
 }
