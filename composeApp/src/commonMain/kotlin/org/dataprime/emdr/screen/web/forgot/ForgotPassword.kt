@@ -1,6 +1,7 @@
 package org.dataprime.emdr.screen.web.forgot
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -22,7 +23,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun ForgotPassword(
     modifier: Modifier = Modifier,
-    lightsOn: Boolean
+    lightsOn: Boolean,
+    onGoBackClicked: () -> Unit
 ) {
 
     var email by remember { mutableStateOf("") }
@@ -119,7 +121,9 @@ fun ForgotPassword(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                modifier = Modifier.padding(horizontal = 24.dp),
+                modifier = Modifier
+                    .padding(horizontal = 24.dp)
+                    .clickable(onClick = onGoBackClicked),
                 text = "Go back to sign in page",
                 fontSize = 14.sp,
                 fontFamily = NunitoSemiBold,
@@ -133,9 +137,12 @@ fun ForgotPassword(
 
 @Preview(showBackground = true, widthDp = 1024, heightDp = 768)
 @Composable
-fun LoginPreview() {
+fun ForgotPasswordPreview() {
     ForgotPassword(
         modifier = Modifier.padding(16.dp),
+        onGoBackClicked = {
+
+        },
         lightsOn = false
     )
 }

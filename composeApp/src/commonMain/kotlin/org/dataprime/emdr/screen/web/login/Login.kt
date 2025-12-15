@@ -2,6 +2,7 @@ package org.dataprime.emdr.screen.web.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -27,6 +28,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun Login(
     modifier: Modifier = Modifier,
     lightsOn: Boolean,
+    onForgotClicked: () -> Unit,
     onLightsOnToggled: (Boolean) -> Unit
 ) {
 
@@ -161,7 +163,11 @@ fun Login(
                 Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                    modifier = Modifier.padding(end = 24.dp),
+                    modifier = Modifier
+                        .padding(end = 24.dp)
+                        .clickable(
+                            onClick = onForgotClicked
+                        ),
                     text = "Forgot Password?",
                     fontSize = 14.sp,
                     fontFamily = NunitoSemiBold,
@@ -226,6 +232,9 @@ fun LoginPreview() {
     Login(
         modifier = Modifier.padding(16.dp),
         lightsOn = false,
+        onForgotClicked = {
+
+        },
         onLightsOnToggled = {
 
         }
