@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 
 val Text500 = Color(0xFF2E2E2E)
 val Text300 = Color(0xFF737373)
+val Text100 = Color(0xFFBEBEBE)
 val Gray600 = Color(0xFFE2E4E5)
 val Gray500 = Color(0xFFF8FAFC)
 val Primary700 = Color(0xFF3566A0)

@@ -12,3 +12,9 @@ object ForgotPassword: WebRoute
 
 @Serializable
 object ForgotPasswordSuccessAlert: WebRoute
+
+@Serializable
+object ChangePassword: WebRoute
+
+@Serializable
+object ChangePasswordSuccessAlert: WebRoute

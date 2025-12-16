@@ -15,6 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import emdrcompanion.composeapp.generated.resources.Res
 import emdrcompanion.composeapp.generated.resources.background_dark
 import emdrcompanion.composeapp.generated.resources.background_light
+import org.dataprime.emdr.screen.web.change_password.ChangePassword
+import org.dataprime.emdr.screen.web.change_password.ChangePasswordSuccessAlert
 import org.dataprime.emdr.screen.web.forgot.ForgotPassword
 import org.dataprime.emdr.screen.web.forgot.ForgotPasswordSuccessAlert
 import org.dataprime.emdr.screen.web.login.Login
@@ -74,6 +76,18 @@ fun WebApp() {
 
             composable<ForgotPasswordSuccessAlert> {
                 ForgotPasswordSuccessAlert(lightsOn = lightsOn) {
+                    nav.popBackStack(route = Login, inclusive = false)
+                }
+            }
+
+            composable<ChangePassword> {
+                ChangePassword(lightsOn = lightsOn) {
+                    nav.navigate(route = ChangePasswordSuccessAlert)
+                }
+            }
+
+            composable<ChangePasswordSuccessAlert> {
+                ChangePasswordSuccessAlert(lightsOn = lightsOn) {
                     nav.popBackStack(route = Login, inclusive = false)
                 }
             }
