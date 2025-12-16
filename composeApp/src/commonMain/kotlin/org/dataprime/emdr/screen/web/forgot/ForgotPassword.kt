@@ -24,11 +24,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun ForgotPassword(
     modifier: Modifier = Modifier,
     lightsOn: Boolean,
+    onSubmitClicked: () -> Unit,
     onGoBackClicked: () -> Unit
 ) {
 
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -105,10 +105,8 @@ fun ForgotPassword(
                     .padding(horizontal = 24.dp)
                     .align(Alignment.CenterHorizontally),
                 colors = ButtonColor,
-                enabled = email.isNotEmpty() && password.isNotEmpty(),
-                onClick = {
-
-                },
+                enabled = email.isNotEmpty(),
+                onClick = onSubmitClicked,
             ) {
                 Text(
                     text = "Submit",
@@ -127,7 +125,7 @@ fun ForgotPassword(
                 text = "Go back to sign in page",
                 fontSize = 14.sp,
                 fontFamily = NunitoSemiBold,
-                color = Primary700,
+                color = if (lightsOn) Primary500 else Primary700,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -140,6 +138,9 @@ fun ForgotPassword(
 fun ForgotPasswordPreview() {
     ForgotPassword(
         modifier = Modifier.padding(16.dp),
+        onSubmitClicked = {
+
+        },
         onGoBackClicked = {
 
         },

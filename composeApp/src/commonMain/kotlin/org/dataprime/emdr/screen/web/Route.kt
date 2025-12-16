@@ -9,3 +9,6 @@ object Login: WebRoute
 
 @Serializable
 object ForgotPassword: WebRoute
+
+@Serializable
+object ForgotPasswordSuccessAlert: WebRoute

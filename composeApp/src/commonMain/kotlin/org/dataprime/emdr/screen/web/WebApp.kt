@@ -16,6 +16,7 @@ import emdrcompanion.composeapp.generated.resources.Res
 import emdrcompanion.composeapp.generated.resources.background_dark
 import emdrcompanion.composeapp.generated.resources.background_light
 import org.dataprime.emdr.screen.web.forgot.ForgotPassword
+import org.dataprime.emdr.screen.web.forgot.ForgotPasswordSuccessAlert
 import org.dataprime.emdr.screen.web.login.Login
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -60,8 +61,20 @@ fun WebApp() {
             }
 
             composable<ForgotPassword> {
-                ForgotPassword(lightsOn = lightsOn) {
-                    nav.navigateUp()
+                ForgotPassword(
+                    lightsOn = lightsOn,
+                    onSubmitClicked = {
+                        nav.navigate(ForgotPasswordSuccessAlert)
+                    },
+                    onGoBackClicked = {
+                        nav.navigateUp()
+                    }
+                )
+            }
+
+            composable<ForgotPasswordSuccessAlert> {
+                ForgotPasswordSuccessAlert(lightsOn = lightsOn) {
+                    nav.popBackStack(route = Login, inclusive = false)
                 }
             }
         }
