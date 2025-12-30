@@ -29,6 +29,7 @@ fun Login(
     modifier: Modifier = Modifier,
     lightsOn: Boolean,
     onForgotClicked: () -> Unit,
+    onSignInClicked: () -> Unit,
     onLightsOnToggled: (Boolean) -> Unit
 ) {
 
@@ -184,9 +185,7 @@ fun Login(
                     .align(Alignment.CenterHorizontally),
                 colors = ButtonColor,
                 enabled = email.isNotEmpty() && password.isNotEmpty(),
-                onClick = {
-
-                },
+                onClick = onSignInClicked,
             ) {
                 Text(
                     text = "Sign In",
@@ -233,6 +232,9 @@ fun LoginPreview() {
         modifier = Modifier.padding(16.dp),
         lightsOn = false,
         onForgotClicked = {
+
+        },
+        onSignInClicked = {
 
         },
         onLightsOnToggled = {

@@ -8,14 +8,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 val Text500 = Color(0xFF2E2E2E)
+val Text400 = Color(0xFF585858)
 val Text300 = Color(0xFF737373)
 val Text100 = Color(0xFFBEBEBE)
+val Gray700 = Color(0xFFB0B2B3)
 val Gray600 = Color(0xFFE2E4E5)
 val Gray500 = Color(0xFFF8FAFC)
+val Neutral200 = Color(0xFFF2F4F5)
 val Primary700 = Color(0xFF3566A0)
 val Primary500 = Color(0xFF4A90E2)
 val Primary300 = Color(0xFF86B5EC)
 val Primary200 = Color(0xFFACCCF2)
+val Red700 = Color(0xFF962121)
+val Green700 = Color(0xFF48854B)
 
 val OutlinedTextFieldColor @Composable get() = OutlinedTextFieldDefaults.colors(
     unfocusedBorderColor = Gray600,

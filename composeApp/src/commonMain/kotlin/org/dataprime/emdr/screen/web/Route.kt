@@ -18,3 +18,6 @@ object ChangePassword: WebRoute
 
 @Serializable
 object ChangePasswordSuccessAlert: WebRoute
+
+@Serializable
+object SuperAdmin: WebRoute
