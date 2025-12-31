@@ -101,7 +101,7 @@ fun WebApp() {
             }
 
             composable<SuperAdmin> {
-                SuperAdmin { tab ->
+                SuperAdmin(lightsOn = lightsOn) { tab ->
                     when(tab) {
                         AdminTab.DASHBOARD -> Dashboard()
                         AdminTab.THERAPISTS -> Therapist()

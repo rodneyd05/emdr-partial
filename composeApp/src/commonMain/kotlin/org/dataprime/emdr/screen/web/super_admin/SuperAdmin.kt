@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import emdrcompanion.composeapp.generated.resources.Res
 import emdrcompanion.composeapp.generated.resources.emdr_text
 import emdrcompanion.composeapp.generated.resources.eye_black
+import emdrcompanion.composeapp.generated.resources.eye_white
 import org.dataprime.emdr.screen.web.web_model.AdminTab
 import org.dataprime.emdr.theme.BalooMedium
 import org.dataprime.emdr.theme.NunitoSemiBold
@@ -32,7 +33,10 @@ import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun SuperAdmin(content: @Composable (AdminTab) -> Unit) {
+fun SuperAdmin(
+    lightsOn: Boolean,
+    content: @Composable (AdminTab) -> Unit
+) {
 
     var selectedTab by remember { mutableStateOf(AdminTab.DASHBOARD) }
 
@@ -62,7 +66,9 @@ fun SuperAdmin(content: @Composable (AdminTab) -> Unit) {
                 ) {
                     Image(
                         modifier = Modifier.height(64.dp),
-                        painter = painterResource(Res.drawable.eye_black),
+                        painter = painterResource(if (lightsOn) {
+                            Res.drawable.eye_white
+                        } else Res.drawable.eye_black),
                         contentDescription = null
                     )
 
@@ -70,6 +76,9 @@ fun SuperAdmin(content: @Composable (AdminTab) -> Unit) {
 
                     Column {
                         Image(
+                            colorFilter = ColorFilter.tint(
+                                if (lightsOn) Color.White else Text500
+                            ),
                             modifier = Modifier.height(36.dp),
                             painter = painterResource(Res.drawable.emdr_text),
                             contentDescription = null
@@ -80,7 +89,7 @@ fun SuperAdmin(content: @Composable (AdminTab) -> Unit) {
                             text = "COMPANION",
                             fontFamily = BalooMedium,
                             fontSize = 20.sp,
-                            color = Text500
+                            color = if (lightsOn) Color.White else Text500
                         )
                     }
                 }
@@ -117,7 +126,11 @@ fun SuperAdmin(content: @Composable (AdminTab) -> Unit) {
                     )
 
                     val contentColor by animateColorAsState(
-                        targetValue = if (selected) Color.White else Text500,
+                        targetValue = if (lightsOn) {
+                            Color.White
+                        } else {
+                            if (selected) Color.White else Text500
+                        },
                         animationSpec = tween(durationMillis = 500),
                         label = "ContentColorAnimation"
                     )
@@ -177,7 +190,7 @@ fun SuperAdmin(content: @Composable (AdminTab) -> Unit) {
 @Preview(showBackground = true, widthDp = 1024, heightDp = 768)
 @Composable
 fun SuperAdminPreview() {
-    SuperAdmin {
+    SuperAdmin(lightsOn = false) {
 
     }
 }
