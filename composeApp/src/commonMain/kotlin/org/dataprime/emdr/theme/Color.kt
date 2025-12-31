@@ -7,6 +7,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+val Text600 = Color(0xFF2A2A2A)
 val Text500 = Color(0xFF2E2E2E)
 val Text400 = Color(0xFF585858)
 val Text300 = Color(0xFF737373)

@@ -1,15 +1,18 @@
 package org.dataprime.emdr.screen.web.super_admin.dashboard
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import emdrcompanion.composeapp.generated.resources.Res
@@ -36,6 +39,12 @@ fun Dashboard() {
         mutableStateOf(DashboardFilter.entries.first())
     }
 
+    var isFilterCustomDate by remember {
+        mutableStateOf(false)
+    }
+
+    val density = LocalDensity.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,59 +69,115 @@ fun Dashboard() {
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        ExposedDropdownMenuBox(
-            expanded = filterExpanded,
-            onExpandedChange = {
-                filterExpanded = !filterExpanded
-            }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Max),
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
-            OutlinedTextField(
-                modifier = Modifier.menuAnchor(
-                    type = ExposedDropdownMenuAnchorType.PrimaryNotEditable
-                ),
-                readOnly = true,
-                leadingIcon = {
-                    Image(
-                        imageVector = vectorResource(Res.drawable.calendar),
-                        contentDescription = null
-                    )
-                },
-                trailingIcon = {
-                    Image(
-                        imageVector = vectorResource(if (filterExpanded) Res.drawable.up else Res.drawable.down),
-                        contentDescription = null
-                    )
-                },
-                colors = OutlinedTextFieldColor,
-                value = selectedItem.label,
-                onValueChange = {
+            var filterTextFieldWidthPx by remember { mutableStateOf(0) }
+            val widthDp = with(density) {
+                filterTextFieldWidthPx.toDp()
+            }
 
-                }
-            )
-
-            ExposedDropdownMenu(
-                containerColor = Color.White,
+            ExposedDropdownMenuBox(
+                modifier = Modifier.onGloballyPositioned {
+                    filterTextFieldWidthPx = it.size.width
+                },
                 expanded = filterExpanded,
-                onDismissRequest = {
-                    filterExpanded = false
+                onExpandedChange = {
+                    filterExpanded = !filterExpanded
                 }
             ) {
-                DashboardFilter.entries.forEach {
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                text = it.label,
-                                fontFamily = InterRegular,
-                                fontSize = 16.sp,
-                                color = Text500
-                            )
-                        },
-                        onClick = {
-                            selectedItem = it
-                            filterExpanded = false
-                        }
-                    )
+
+                OutlinedTextField(
+                    modifier = Modifier
+                        .menuAnchor(
+                        type = ExposedDropdownMenuAnchorType.PrimaryNotEditable
+                    ),
+                    readOnly = true,
+                    leadingIcon = {
+                        Image(
+                            imageVector = vectorResource(Res.drawable.calendar),
+                            contentDescription = null
+                        )
+                    },
+                    trailingIcon = {
+                        Image(
+                            imageVector = vectorResource(if (filterExpanded) Res.drawable.up else Res.drawable.down),
+                            contentDescription = null
+                        )
+                    },
+                    colors = OutlinedTextFieldColor,
+                    value = selectedItem.label,
+                    onValueChange = {
+
+                    }
+                )
+
+                ExposedDropdownMenu(
+                    containerColor = Color.White,
+                    expanded = filterExpanded,
+                    onDismissRequest = {
+                        filterExpanded = false
+                    }
+                ) {
+                    DashboardFilter.entries.forEach {
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = it.label,
+                                    fontFamily = InterRegular,
+                                    fontSize = 16.sp,
+                                    color = Text500
+                                )
+                            },
+                            onClick = {
+                                isFilterCustomDate = it == DashboardFilter.CUSTOM
+                                selectedItem = it
+                                filterExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            if (isFilterCustomDate) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(widthDp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .border(width = 1.dp, color = Gray600, shape = RoundedCornerShape(4.dp))
+                        .background(Color.White)
+                        .padding(vertical = 12.dp, horizontal = 14.dp)
+                ) {
+
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Image(
+                            colorFilter = ColorFilter.tint(Text600),
+                            imageVector = vectorResource(Res.drawable.calendar),
+                            contentDescription = null
+                        )
+
+                        Spacer(modifier = Modifier.width(16.dp))
+
+                        Text(
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            text = "Select Dates",
+                            fontFamily = InterRegular,
+                            fontSize = 16.sp,
+                            color = Text600
+                        )
+                    }
                 }
             }
         }

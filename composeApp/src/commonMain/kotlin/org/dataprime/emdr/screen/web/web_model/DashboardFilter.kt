@@ -7,5 +7,6 @@ enum class DashboardFilter(val label: String) {
     LAST_14_DAYS("Last 14 days"),
     THIS_MONTH("This month"),
     LAST_MONTH("Last month"),
-    THIS_YEAR("This year")
+    THIS_YEAR("This year"),
+    CUSTOM("Custom date range")
 }
