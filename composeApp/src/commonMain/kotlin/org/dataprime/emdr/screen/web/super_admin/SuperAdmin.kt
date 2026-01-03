@@ -26,6 +26,7 @@ import emdrcompanion.composeapp.generated.resources.arrow_up_right
 import emdrcompanion.composeapp.generated.resources.emdr_text
 import emdrcompanion.composeapp.generated.resources.eye_black
 import emdrcompanion.composeapp.generated.resources.eye_white
+import org.dataprime.emdr.screen.web.component.Heading
 import org.dataprime.emdr.screen.web.web_model.AdminTab
 import org.dataprime.emdr.theme.BalooMedium
 import org.dataprime.emdr.theme.NunitoSemiBold
@@ -227,6 +228,9 @@ fun SuperAdmin(
             .clip(RoundedCornerShape(24.dp))
             .background(Color.White)
         ) {
+
+            Heading(user = "User")
+
             content(selectedTab)
         }
     }

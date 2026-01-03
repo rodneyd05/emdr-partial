@@ -51,23 +51,6 @@ fun Dashboard() {
             .verticalScroll(rememberScrollState())
             .padding(40.dp)
     ) {
-        Text(
-            text = "Welcome back, User",
-            fontFamily = InterSemiBold,
-            fontSize = 30.sp,
-            color = Text500
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "Track, manage and forecast your users and subscribers.",
-            fontFamily = InterRegular,
-            fontSize = 16.sp,
-            color = Text300
-        )
-
-        Spacer(modifier = Modifier.height(40.dp))
 
         Row(
             modifier = Modifier
