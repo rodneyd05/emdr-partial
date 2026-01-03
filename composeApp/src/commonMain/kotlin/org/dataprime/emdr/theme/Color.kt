@@ -20,6 +20,7 @@ val Primary700 = Color(0xFF3566A0)
 val Primary500 = Color(0xFF4A90E2)
 val Primary300 = Color(0xFF86B5EC)
 val Primary200 = Color(0xFFACCCF2)
+val Primary50 = Color(0xFFEDF4FC)
 val Red700 = Color(0xFF962121)
 val Green700 = Color(0xFF48854B)
 
