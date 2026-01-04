@@ -24,7 +24,7 @@ import emdrcompanion.composeapp.generated.resources.*
 import org.dataprime.emdr.screen.web.sample.sampleTherapistLists
 import org.dataprime.emdr.screen.web.web_model.Filter
 import org.dataprime.emdr.screen.web.web_model.Plan
-import org.dataprime.emdr.screen.web.web_model.TherapistFilter
+import org.dataprime.emdr.screen.web.web_model.TherapistClientFilter
 import org.dataprime.emdr.theme.*
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -41,8 +41,8 @@ fun Therapist() {
         mutableStateOf(false)
     }
 
-    var selectedTherapistFilterItem by remember {
-        mutableStateOf(TherapistFilter.entries.first())
+    var selectedTherapistClientFilterItem by remember {
+        mutableStateOf(TherapistClientFilter.entries.first())
     }
 
     var selectedItem by remember {
@@ -108,8 +108,8 @@ fun Therapist() {
                     },
                     colors = OutlinedTextFieldColor,
                     value = "Filters${
-                        if (selectedTherapistFilterItem == TherapistFilter.ALL) "" else {
-                            ": " + selectedTherapistFilterItem.label
+                        if (selectedTherapistClientFilterItem == TherapistClientFilter.ALL) "" else {
+                            ": " + selectedTherapistClientFilterItem.label
                         }
                     }",
                     onValueChange = {
@@ -124,7 +124,7 @@ fun Therapist() {
                         therapistFilterExpanded = false
                     }
                 ) {
-                    TherapistFilter.entries.forEach {
+                    TherapistClientFilter.entries.forEach {
                         DropdownMenuItem(
                             text = {
                                 Text(
@@ -135,7 +135,7 @@ fun Therapist() {
                                 )
                             },
                             onClick = {
-                                selectedTherapistFilterItem = it
+                                selectedTherapistClientFilterItem = it
                                 therapistFilterExpanded = false
                             }
                         )

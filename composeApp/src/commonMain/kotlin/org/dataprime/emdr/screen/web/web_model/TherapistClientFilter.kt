@@ -1,6 +1,6 @@
 package org.dataprime.emdr.screen.web.web_model
 
-enum class TherapistFilter(val label: String) {
+enum class TherapistClientFilter(val label: String) {
     ALL("All"),
     ACTIVE("Active"),
     EXPIRED("Expired (Inactive)"),

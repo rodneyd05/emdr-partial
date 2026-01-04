@@ -25,9 +25,7 @@ import org.dataprime.emdr.screen.web.super_admin.dashboard.Dashboard
 import org.dataprime.emdr.screen.web.super_admin.therapist.Therapist
 import org.dataprime.emdr.screen.web.web_model.AdminTab
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@Preview(showBackground = true, widthDp = 1024, heightDp = 768)
 @Composable
 fun WebApp() {
 
