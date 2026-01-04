@@ -21,7 +21,7 @@ import emdrcompanion.composeapp.generated.resources.down
 import emdrcompanion.composeapp.generated.resources.up
 import org.dataprime.emdr.screen.web.component.IllustrationCard
 import org.dataprime.emdr.screen.web.component.MonthlyBarChart
-import org.dataprime.emdr.screen.web.web_model.DashboardFilter
+import org.dataprime.emdr.screen.web.web_model.Filter
 import org.dataprime.emdr.screen.web.web_model.Direction
 import org.dataprime.emdr.theme.*
 import org.jetbrains.compose.resources.vectorResource
@@ -36,7 +36,7 @@ fun Dashboard() {
     }
 
     var selectedItem by remember {
-        mutableStateOf(DashboardFilter.entries.first())
+        mutableStateOf(Filter.entries.first())
     }
 
     var isFilterCustomDate by remember {
@@ -106,7 +106,7 @@ fun Dashboard() {
                         filterExpanded = false
                     }
                 ) {
-                    DashboardFilter.entries.forEach {
+                    Filter.entries.forEach {
                         DropdownMenuItem(
                             text = {
                                 Text(
@@ -117,7 +117,7 @@ fun Dashboard() {
                                 )
                             },
                             onClick = {
-                                isFilterCustomDate = it == DashboardFilter.CUSTOM
+                                isFilterCustomDate = it == Filter.CUSTOM
                                 selectedItem = it
                                 filterExpanded = false
                             }

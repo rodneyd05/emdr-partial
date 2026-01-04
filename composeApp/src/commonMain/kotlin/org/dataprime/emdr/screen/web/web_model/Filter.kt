@@ -1,6 +1,6 @@
 package org.dataprime.emdr.screen.web.web_model
 
-enum class DashboardFilter(val label: String) {
+enum class Filter(val label: String) {
     ALL_TIME("All time"),
     TODAY("Today"),
     LAST_7_DAYS("Last 7 days"),

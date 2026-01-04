@@ -235,11 +235,3 @@ fun SuperAdmin(
         }
     }
 }
-
-@Preview(showBackground = true, widthDp = 1024, heightDp = 768)
-@Composable
-fun SuperAdminPreview() {
-    SuperAdmin(lightsOn = false) {
-
-    }
-}
