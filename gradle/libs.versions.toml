@@ -13,6 +13,7 @@ composeMultiplatform = "1.10.0-rc02"
 junit = "4.13.2"
 kotlin = "2.2.21"
 navigationCompose = "2.9.1"
+fastscroller = "0.3.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -27,6 +28,7 @@ androidx-lifecycle-viewmodelCompose = { module = "org.jetbrains.androidx.lifecyc
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+fastscroller-core = { module = "io.github.oikvpqya.compose.fastscroller:fastscroller-core", version.ref = "fastscroller" }
 
 
 [plugins]

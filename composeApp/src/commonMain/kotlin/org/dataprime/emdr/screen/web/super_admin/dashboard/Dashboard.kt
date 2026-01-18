@@ -19,6 +19,9 @@ import emdrcompanion.composeapp.generated.resources.Res
 import emdrcompanion.composeapp.generated.resources.calendar
 import emdrcompanion.composeapp.generated.resources.down
 import emdrcompanion.composeapp.generated.resources.up
+import io.github.oikvpqya.compose.fastscroller.ScrollbarAdapter
+import io.github.oikvpqya.compose.fastscroller.VerticalScrollbar
+import io.github.oikvpqya.compose.fastscroller.defaultScrollbarStyle
 import org.dataprime.emdr.screen.web.component.IllustrationCard
 import org.dataprime.emdr.screen.web.component.MonthlyBarChart
 import org.dataprime.emdr.screen.web.web_model.Filter
@@ -44,11 +47,11 @@ fun Dashboard() {
     }
 
     val density = LocalDensity.current
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
             .padding(40.dp)
     ) {
 
@@ -77,8 +80,8 @@ fun Dashboard() {
                 OutlinedTextField(
                     modifier = Modifier
                         .menuAnchor(
-                        type = ExposedDropdownMenuAnchorType.PrimaryNotEditable
-                    ),
+                            type = ExposedDropdownMenuAnchorType.PrimaryNotEditable
+                        ),
                     readOnly = true,
                     leadingIcon = {
                         Image(
@@ -167,81 +170,101 @@ fun Dashboard() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Row(modifier = Modifier.fillMaxWidth()) {
-
-            IllustrationCard(
-                modifier = Modifier.weight(0.5f),
-                heading = "Total revenue",
-                content = "$ 612,000.00",
-                percentage = "60%",
-                direction = Direction.UP
-            )
-
-            Spacer(modifier = Modifier.width(20.dp))
-
-            IllustrationCard(
-                modifier = Modifier.weight(0.5f),
-                heading = "New app subscribers",
-                content = "124",
-                percentage = "10%",
-                direction = Direction.UP
-            )
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Surface(
+        Box(
             modifier = Modifier
-                .height(304.dp)
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(8.dp),
-            color = Color.White,
-            border = BorderStroke(width = 1.dp, color = Gray600)
+                .fillMaxSize()
         ) {
-            MonthlyBarChart(
-                values = listOf(
-                    700f, 850f, 550f, 750f, 550f, 820f,
-                    700f, 750f, 700f, 780f, 850f, 650f
-                ),
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(240.dp)
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(end = 16.dp)
+            ) {
+                Row(modifier = Modifier.fillMaxWidth()) {
+
+                    IllustrationCard(
+                        modifier = Modifier.weight(0.5f),
+                        heading = "Total revenue",
+                        content = "$ 612,000.00",
+                        percentage = "60%",
+                        direction = Direction.UP
+                    )
+
+                    Spacer(modifier = Modifier.width(20.dp))
+
+                    IllustrationCard(
+                        modifier = Modifier.weight(0.5f),
+                        heading = "New app subscribers",
+                        content = "124",
+                        percentage = "10%",
+                        direction = Direction.UP
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Surface(
+                    modifier = Modifier
+                        .height(304.dp)
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(8.dp),
+                    color = Color.White,
+                    border = BorderStroke(width = 1.dp, color = Gray600)
+                ) {
+                    MonthlyBarChart(
+                        values = listOf(
+                            700f, 850f, 550f, 750f, 550f, 820f,
+                            700f, 750f, 700f, 780f, 850f, 650f
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(240.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Row(modifier = Modifier.fillMaxWidth()) {
+
+                    IllustrationCard(
+                        modifier = Modifier.weight(0.33f),
+                        heading = "Total active app users",
+                        content = "2420",
+                        percentage = "40%",
+                        direction = Direction.UP
+                    )
+
+                    Spacer(modifier = Modifier.width(20.dp))
+
+                    IllustrationCard(
+                        modifier = Modifier.weight(0.33f),
+                        heading = "Total active subscribers",
+                        content = "121",
+                        percentage = "20%",
+                        direction = Direction.UP
+                    )
+
+                    Spacer(modifier = Modifier.width(20.dp))
+
+                    IllustrationCard(
+                        modifier = Modifier.weight(0.33f),
+                        heading = "New app users",
+                        content = "80",
+                        percentage = "20%",
+                        direction = Direction.DOWN
+                    )
+                }
+            }
+
+            VerticalScrollbar(
+                modifier = Modifier.align(Alignment.TopEnd),
+                style = defaultScrollbarStyle(),
+                adapter = ScrollbarAdapter(
+                    scrollState = scrollState
+                ),
+                enablePressToScroll = false
             )
         }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Row(modifier = Modifier.fillMaxWidth()) {
-
-            IllustrationCard(
-                modifier = Modifier.weight(0.33f),
-                heading = "Total active app users",
-                content = "2420",
-                percentage = "40%",
-                direction = Direction.UP
-            )
-
-            Spacer(modifier = Modifier.width(20.dp))
-
-            IllustrationCard(
-                modifier = Modifier.weight(0.33f),
-                heading = "Total active subscribers",
-                content = "121",
-                percentage = "20%",
-                direction = Direction.UP
-            )
-
-            Spacer(modifier = Modifier.width(20.dp))
-
-            IllustrationCard(
-                modifier = Modifier.weight(0.33f),
-                heading = "New app users",
-                content = "80",
-                percentage = "20%",
-                direction = Direction.DOWN
-            )
-        }
-
     }
 }
 

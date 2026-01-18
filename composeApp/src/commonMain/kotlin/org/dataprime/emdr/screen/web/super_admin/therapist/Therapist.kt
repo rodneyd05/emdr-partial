@@ -4,8 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -16,15 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import emdrcompanion.composeapp.generated.resources.*
+import org.dataprime.emdr.screen.web.component.FrozenTable
 import org.dataprime.emdr.screen.web.sample.sampleTherapistLists
 import org.dataprime.emdr.screen.web.web_model.Filter
-import org.dataprime.emdr.screen.web.web_model.Plan
 import org.dataprime.emdr.screen.web.web_model.TherapistClientFilter
+import org.dataprime.emdr.screen.web.web_model.therapistHeaders
 import org.dataprime.emdr.theme.*
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -276,179 +274,10 @@ fun Therapist() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(RoundedCornerShape(8.dp))
-                .border(width = 1.dp, color = Gray600, shape = RoundedCornerShape(8.dp))
-        ) {
-
-            stickyHeader {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Neutral100),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Row(
-                        modifier = Modifier
-                        .padding(vertical = 12.dp, horizontal = 24.dp)
-                        .weight(0.34f),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            modifier = Modifier,
-                            text = "First and last name",
-                            fontFamily = InterMedium,
-                            fontSize = 12.sp,
-                            color = Text400
-                        )
-
-                        Image(
-                            modifier = Modifier.size(16.dp),
-                            colorFilter = ColorFilter.tint(Text400),
-                            imageVector = vectorResource(Res.drawable.arrow_up),
-                            contentDescription = null
-                        )
-                    }
-
-
-                    Text(
-                        modifier = Modifier
-                            .width(200.dp),
-                        textAlign = TextAlign.Center,
-                        text = "Subscription plan",
-                        fontFamily = InterMedium,
-                        fontSize = 12.sp,
-                        color = Text400
-                    )
-
-                    Row(modifier = Modifier
-                        .padding(vertical = 12.dp, horizontal = 24.dp)
-                        .weight(0.22f),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-
-                    ) {
-                        Text(
-                            text = "Subscription start date",
-                            fontFamily = InterMedium,
-                            fontSize = 12.sp,
-                            color = Text400
-                        )
-
-                        Image(
-                            modifier = Modifier.size(16.dp),
-                            colorFilter = ColorFilter.tint(Text400),
-                            imageVector = vectorResource(Res.drawable.arrow_up),
-                            contentDescription = null
-                        )
-                    }
-
-                    Row(modifier = Modifier
-                        .padding(vertical = 12.dp, horizontal = 24.dp)
-                        .weight(0.22f),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-
-                    ) {
-                        Text(
-                            text = "Next renewal date",
-                            fontFamily = InterMedium,
-                            fontSize = 12.sp,
-                            color = Text400
-                        )
-
-                        Image(
-                            modifier = Modifier.size(16.dp),
-                            colorFilter = ColorFilter.tint(Text400),
-                            imageVector = vectorResource(Res.drawable.arrow_up),
-                            contentDescription = null
-                        )
-                    }
-
-                }
-
-                HorizontalDivider(color = Gray600)
-            }
-
-            items(sampleTherapistLists) {
-
-                val fullName = "${it.firstName} ${it.lastName}"
-
-                val subscriptionBackground = when (it.subscriptionPlan) {
-                    Plan.Basic -> Primary50
-                    Plan.Premium -> Green50
-                }
-
-                val subscriptionFontColor = when (it.subscriptionPlan) {
-                    Plan.Basic -> Primary700
-                    Plan.Premium -> Green800
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(vertical = 12.dp, horizontal = 24.dp)
-                            .weight(0.34f),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        text = fullName,
-                        fontFamily = InterMedium,
-                        fontSize = 12.sp,
-                        color = Text400
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .width(200.dp)
-                            .padding(vertical = 16.dp, horizontal = 24.dp)
-                            .clip(RoundedCornerShape(16.dp))
-                            .background(color = subscriptionBackground),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(vertical = 2.dp, horizontal = 8.dp),
-                            text = it.subscriptionPlan.name,
-                            textAlign = TextAlign.Center,
-                            fontFamily = InterMedium,
-                            fontSize = 12.sp,
-                            color = subscriptionFontColor
-                        )
-                    }
-
-                    Text(
-                        modifier = Modifier
-                            .padding(vertical = 12.dp, horizontal = 24.dp)
-                            .weight(0.22f),
-                        text = it.subscriptionStartDate,
-                        fontFamily = InterMedium,
-                        fontSize = 12.sp,
-                        color = Text400
-                    )
-                    Text(
-                        modifier = Modifier
-                            .padding(vertical = 12.dp, horizontal = 24.dp)
-                            .weight(0.22f),
-                        text = it.nextRenewalDate,
-                        fontFamily = InterMedium,
-                        fontSize = 12.sp,
-                        color = Text400
-                    )
-                }
-
-                HorizontalDivider(color = Gray500)
-            }
-
-
-        }
+        FrozenTable(
+            headers = therapistHeaders,
+            data = sampleTherapistLists
+        )
     }
 }
 

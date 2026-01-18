@@ -1,5 +1,4 @@
 
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -54,11 +53,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            //implementation(libs.androidx.navigation3.runtime)
-            //implementation(libs.androidx.navigation3.ui)
-            //implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-            //implementation(libs.kotlinx.serialization.core)
             implementation(libs.navigation.compose)
+            implementation(libs.fastscroller.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
