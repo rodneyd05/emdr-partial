@@ -1,12 +1,31 @@
-package org.dataprime.emdr.screen.web.super_admin.therapist
+package org.dataprime.emdr.screen.web.super_admin.client
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,21 +36,31 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import emdrcompanion.composeapp.generated.resources.*
+import emdrcompanion.composeapp.generated.resources.Res
+import emdrcompanion.composeapp.generated.resources.calendar
+import emdrcompanion.composeapp.generated.resources.down
+import emdrcompanion.composeapp.generated.resources.filter_lines
+import emdrcompanion.composeapp.generated.resources.search_md
+import emdrcompanion.composeapp.generated.resources.up
 import org.dataprime.emdr.screen.web.component.FrozenTable
-import org.dataprime.emdr.screen.web.sample.sampleTherapistList
+import org.dataprime.emdr.screen.web.sample.sampleClientList
 import org.dataprime.emdr.screen.web.web_model.Filter
 import org.dataprime.emdr.screen.web.web_model.TherapistClientFilter
-import org.dataprime.emdr.screen.web.web_model.therapistHeaders
-import org.dataprime.emdr.theme.*
+import org.dataprime.emdr.screen.web.web_model.clientHeaders
+import org.dataprime.emdr.theme.Gray600
+import org.dataprime.emdr.theme.InterRegular
+import org.dataprime.emdr.theme.OutlinedTextFieldColor
+import org.dataprime.emdr.theme.Text200
+import org.dataprime.emdr.theme.Text500
+import org.dataprime.emdr.theme.Text600
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Therapist() {
+fun Client() {
 
-    var therapistFilterExpanded by remember {
+    var clientFilterExpanded by remember {
         mutableStateOf(false)
     }
 
@@ -80,9 +109,9 @@ fun Therapist() {
                 modifier = Modifier.onGloballyPositioned {
                     filterTextFieldWidthPx = it.size.width
                 },
-                expanded = therapistFilterExpanded,
+                expanded = clientFilterExpanded,
                 onExpandedChange = {
-                    therapistFilterExpanded = !therapistFilterExpanded
+                    clientFilterExpanded = !clientFilterExpanded
                 }
             ) {
 
@@ -100,7 +129,7 @@ fun Therapist() {
                     },
                     trailingIcon = {
                         Image(
-                            imageVector = vectorResource(if (therapistFilterExpanded) Res.drawable.up else Res.drawable.down),
+                            imageVector = vectorResource(if (clientFilterExpanded) Res.drawable.up else Res.drawable.down),
                             contentDescription = null
                         )
                     },
@@ -117,9 +146,9 @@ fun Therapist() {
 
                 ExposedDropdownMenu(
                     containerColor = Color.White,
-                    expanded = therapistFilterExpanded,
+                    expanded = clientFilterExpanded,
                     onDismissRequest = {
-                        therapistFilterExpanded = false
+                        clientFilterExpanded = false
                     }
                 ) {
                     TherapistClientFilter.entries.forEach {
@@ -134,7 +163,7 @@ fun Therapist() {
                             },
                             onClick = {
                                 selectedTherapistClientFilterItem = it
-                                therapistFilterExpanded = false
+                                clientFilterExpanded = false
                             }
                         )
                     }
@@ -275,14 +304,14 @@ fun Therapist() {
         Spacer(modifier = Modifier.height(20.dp))
 
         FrozenTable(
-            headers = therapistHeaders,
-            data = sampleTherapistList
+            headers = clientHeaders,
+            data = sampleClientList
         )
     }
 }
 
 @Preview(widthDp = 1920, heightDp = 1080)
 @Composable
-fun TherapistPreview() {
-    Therapist()
+fun ClientPreview() {
+    Client()
 }

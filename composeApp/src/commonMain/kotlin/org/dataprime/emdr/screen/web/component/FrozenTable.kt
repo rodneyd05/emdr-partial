@@ -29,8 +29,10 @@ import io.github.oikvpqya.compose.fastscroller.HorizontalScrollbar
 import io.github.oikvpqya.compose.fastscroller.VerticalScrollbar
 import io.github.oikvpqya.compose.fastscroller.defaultScrollbarStyle
 import io.github.oikvpqya.compose.fastscroller.rememberScrollbarAdapter
+import org.dataprime.emdr.data.model.ClientModel
 import org.dataprime.emdr.data.model.TherapistModel
-import org.dataprime.emdr.screen.web.sample.sampleTherapistLists
+import org.dataprime.emdr.data.model.User
+import org.dataprime.emdr.screen.web.sample.sampleTherapistList
 import org.dataprime.emdr.screen.web.web_model.Plan
 import org.dataprime.emdr.screen.web.web_model.therapistHeaders
 import org.dataprime.emdr.theme.Gray500
@@ -53,7 +55,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun FrozenTable(
     headers: List<String>,
-    data: List<TherapistModel>
+    data: List<User>
 ) {
 
     val verticalScroll = rememberScrollState()
@@ -90,7 +92,7 @@ fun FrozenTable(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 12.dp, horizontal = 24.dp),
-                    text = "First and last name"
+                    text = headers.first()
                 )
             }
 
@@ -100,7 +102,7 @@ fun FrozenTable(
                     .weight(1f)
                     .horizontalScroll(horizontalScroll)
             ) {
-                headers.forEach { header ->
+                headers.drop(n = 1).forEach { header ->
                     TableHeadingWithSort(
                         modifier = Modifier
                             .width(cellWidth)
@@ -130,9 +132,9 @@ fun FrozenTable(
         Box(modifier = Modifier.weight(1f)) {
 
             Row(modifier = Modifier.fillMaxSize()) {
-                // ── BOTTOM-LEFT (vertical scroll only)
+                // ── MIDDLE-LEFT (vertical scroll only)
                 Column(modifier = Modifier.verticalScroll(verticalScroll)) {
-                    data.forEach { therapist ->
+                    data.forEach { item ->
                         Column(
                             modifier = Modifier
                                 .width(nameColumnWidth)
@@ -152,7 +154,11 @@ fun FrozenTable(
                                         fontFamily = InterMedium,
                                         fontSize = 14.sp,
                                         color = Text500,
-                                        text = "${therapist.firstName} ${therapist.lastName}"
+                                        text = when (item) {
+                                            is TherapistModel -> "${item.firstName} ${item.lastName}"
+                                            is ClientModel -> item.userId
+                                            else -> ""
+                                        }
                                     )
                                 }
 
@@ -165,54 +171,99 @@ fun FrozenTable(
                     }
                 }
 
-                // ── BOTTOM-RIGHT (horizontal + vertical scroll)
+                // ── MIDDLE-RIGHT (horizontal + vertical scroll)
                 Box(modifier = Modifier.weight(1f)) {
+
                     Column(
                         modifier = Modifier
                             .horizontalScroll(horizontalScroll)
                             .verticalScroll(verticalScroll)
                     ) {
 
-                        data.forEach { therapist ->
+                        data.forEach { item ->
 
-                            val subscriptionBackground = when (therapist.subscriptionPlan) {
+                            val subscriptionBackground = when (item.subscriptionPlan) {
                                 Plan.Basic -> Primary50
                                 Plan.Premium -> Green50
                             }
 
-                            val subscriptionFontColor = when (therapist.subscriptionPlan) {
+                            val subscriptionFontColor = when (item.subscriptionPlan) {
                                 Plan.Basic -> Primary700
                                 Plan.Premium -> Green800
+                            }
+
+                            val contentSize = when(item) {
+                                is TherapistModel -> 6
+                                is ClientModel -> 7
+                                else -> 2
                             }
 
                             Column(
                                 modifier = Modifier
                                     .height(rowHeight)
-                                    .width(cellWidth * 6)
+                                    .width(cellWidth * contentSize)
                             ) {
+
                                 Row(modifier = Modifier.fillMaxSize()) {
+                                    when (item) {
+                                        is TherapistModel -> {
+                                            PlanDataCell(
+                                                text = item.subscriptionPlan.name,
+                                                subscriptionBackground = subscriptionBackground,
+                                                subscriptionFontColor = subscriptionFontColor
+                                            )
+                                            VerticalDivider(color = Gray500)
 
-                                    PlanDataCell(
-                                        text = therapist.subscriptionPlan.name,
-                                        subscriptionBackground = subscriptionBackground,
-                                        subscriptionFontColor = subscriptionFontColor
-                                    )
-                                    VerticalDivider(color = Gray500)
+                                            OtherDataCell(item.subscriptionStartDate)
+                                            VerticalDivider(color = Gray500)
 
-                                    OtherDataCell(therapist.subscriptionStartDate)
-                                    VerticalDivider(color = Gray500)
+                                            OtherDataCell(item.nextRenewalDate)
+                                            VerticalDivider(color = Gray500)
 
-                                    OtherDataCell(therapist.nextRenewalDate)
-                                    VerticalDivider(color = Gray500)
+                                            OtherDataCell(item.address)
+                                            VerticalDivider(color = Gray500)
 
-                                    OtherDataCell(therapist.address)
-                                    VerticalDivider(color = Gray500)
+                                            OtherDataCell(item.businessName)
+                                            VerticalDivider(color = Gray500)
 
-                                    OtherDataCell(therapist.businessName)
-                                    VerticalDivider(color = Gray500)
+                                            OtherDataCell(item.signupDate)
+                                            VerticalDivider(color = Gray500)
+                                        }
 
-                                    OtherDataCell(therapist.signupDate)
-                                    VerticalDivider(color = Gray500)
+                                        is ClientModel -> {
+
+                                            OtherDataCell(text = item.userName)
+                                            VerticalDivider(color = Gray500)
+
+                                            PlanDataCell(
+                                                text = item.subscriptionPlan.name,
+                                                subscriptionBackground = subscriptionBackground,
+                                                subscriptionFontColor = subscriptionFontColor
+                                            )
+                                            VerticalDivider(color = Gray500)
+
+                                            OtherDataCell(text = item.linkedTherapist)
+                                            VerticalDivider(color = Gray500)
+
+                                            OtherDataCell(
+                                                text = if (item.logShared) {
+                                                    "Shared"
+                                                } else "Not shared"
+                                            )
+                                            VerticalDivider(color = Gray500)
+
+                                            OtherDataCell(item.subscriptionStartDate)
+                                            VerticalDivider(color = Gray500)
+
+                                            OtherDataCell(item.nextRenewalDate)
+                                            VerticalDivider(color = Gray500)
+
+                                            OtherDataCell(item.signupDate)
+                                            VerticalDivider(color = Gray500)
+                                        }
+
+                                        else -> Unit
+                                    }
                                 }
 
                                 HorizontalDivider(color = Gray500)
@@ -383,6 +434,6 @@ fun OtherDataCell(text: String) {
 fun FrozenTablePreview() {
     FrozenTable(
         headers = therapistHeaders,
-        data = sampleTherapistLists
+        data = sampleTherapistList
     )
 }

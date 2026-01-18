@@ -21,6 +21,7 @@ import org.dataprime.emdr.screen.web.forgot.ForgotPassword
 import org.dataprime.emdr.screen.web.forgot.ForgotPasswordSuccessAlert
 import org.dataprime.emdr.screen.web.login.Login
 import org.dataprime.emdr.screen.web.super_admin.SuperAdmin
+import org.dataprime.emdr.screen.web.super_admin.client.Client
 import org.dataprime.emdr.screen.web.super_admin.dashboard.Dashboard
 import org.dataprime.emdr.screen.web.super_admin.therapist.Therapist
 import org.dataprime.emdr.screen.web.web_model.AdminTab
@@ -103,7 +104,8 @@ fun WebApp() {
                     when(tab) {
                         AdminTab.DASHBOARD -> Dashboard()
                         AdminTab.THERAPISTS -> Therapist()
-                        else -> {}
+                        AdminTab.CLIENTS -> Client()
+                        else -> Unit
                     }
                 }
             }

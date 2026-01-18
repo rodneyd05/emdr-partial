@@ -3,7 +3,7 @@ package org.dataprime.emdr.screen.web.sample
 import org.dataprime.emdr.screen.web.web_model.Plan
 import org.dataprime.emdr.data.model.TherapistModel
 
-val sampleTherapistLists = listOf(
+val sampleTherapistList = listOf(
     TherapistModel(firstName = "Alissa", lastName = "Miles", subscriptionPlan = Plan.Basic, subscriptionStartDate = "Feb 11, 2025", nextRenewalDate = "Mar 11, 2025", address = "12 Hill St, Boston, MA", businessName = "MediCore", signupDate = "Feb 11, 2025"),
     TherapistModel(firstName = "Arden", lastName = "Mane", subscriptionPlan = Plan.Basic, subscriptionStartDate = "Mar 04, 2025", nextRenewalDate = "Apr 04, 2025", address = "45 Pine Rd, Miami, FL", businessName = "HealthPoint", signupDate = "Mar 04, 2025"),
     TherapistModel(firstName = "Ashton", lastName = "Queen", subscriptionPlan = Plan.Basic, subscriptionStartDate = "Apr 27, 2025", nextRenewalDate = "May 27, 2025", address = "88 Lake St, Denver, CO", businessName = "QuickCare", signupDate = "Apr 27, 2025"),
